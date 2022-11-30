@@ -66,14 +66,15 @@ class Authsystem {
             $stmt = dbconnect::connect()->prepare($sql);
             $stmt->execute();
             $row = $stmt->fetch();
-
-            if($row['user_name'] == $user){
-                echo json_encode(array('ststus' => 'error', 'msg' => 'มีเลขประจำตัวนักเรียนนี้อยู่ในระบบแล้ว'));
-            } else {
-                $passHash = password_hash($pass, PASSWORD_DEFAULT);
-                $stmt = dbconnect::connect()->prepare("INSERT INRO (user_name, user_pass) VALUES ($user, $passHash)");
-                $stmt->execute();
-                echo json_encode(array('status'=>"success",'msg'=>"สมัครสมาชิกเรียบร้อยแล้ว",'href'=>"/index.php"));
+            if (!empty($row)){
+                if($row['user_name'] == $user){
+                    echo json_encode(array('ststus' => 'error', 'msg' => 'มีเลขประจำตัวนักเรียนนี้อยู่ในระบบแล้ว'));
+                } else {
+                    $passHash = password_hash($pass, PASSWORD_DEFAULT);
+                    $stmt = dbconnect::connect()->prepare("INSERT INRO (user_name, user_pass) VALUES ($user, $passHash)");
+                    $stmt->execute();
+                    echo json_encode(array('status'=>"success",'msg'=>"สมัครสมาชิกเรียบร้อยแล้ว",'href'=>"/index.php"));
+                }
             }
         } catch (PDOException $e){
             echo $e->getMessage();
