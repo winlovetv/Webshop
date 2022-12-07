@@ -50,8 +50,9 @@ class Authsystem {
                 $_SESSION['login_status'] = "ไม่มีข้อมูลในระบบ";
                 $_SESSION['error'] = "ไม่มีข้อมูลในระบบ";
                 $response = array(
-                    'status' => 'success',
-                    'message' => 'ไม่มีข้อมูลในระบบ'
+                    'status' => 'error',
+                    'message' => 'ไม่มีข้อมูลในระบบ',
+                    'href' => "index.php"
                 );
                 echo json_encode($response);
             }
